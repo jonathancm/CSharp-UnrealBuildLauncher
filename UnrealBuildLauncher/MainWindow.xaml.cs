@@ -57,6 +57,11 @@ namespace UnrealBuildLauncher
         {
             var OutData = new List<BuildConfigData>();
 
+            if (!File.Exists(ConfigFileName))
+            {
+                return OutData;
+            }
+
             string TextContent = File.ReadAllText(GetConfigFilePath());
             if (string.IsNullOrEmpty(TextContent))
                 return OutData;
@@ -76,7 +81,7 @@ namespace UnrealBuildLauncher
 #if DEBUG
             string BaseFileDirectory = "./../../../";
 #else
-            string BaseFileDirectory = Directory.GetCurrentDirectory();
+            string BaseFileDirectory = "./";
 #endif
             return BaseFileDirectory + ConfigFileName;
         }
