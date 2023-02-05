@@ -1,0 +1,23 @@
+{
+	"Version": "0.0.0",
+	"BuildConfigs": [
+		{
+			"BuildName": "FL Metagame Server",
+			"BuildCategory": "Local Cook",
+			"ExecPath": "",
+			"ExecArgs": ""
+		},
+		{
+			"BuildName": "FL LocalHost Client",
+			"BuildCategory": "Local Cook",
+			"ExecPath": "",
+			"ExecArgs": ""
+		},
+		{
+			"BuildName": "FL WinGDK",
+			"BuildCategory": "Nightly",
+			"ExecPath": "",
+			"ExecArgs": ""
+		}
+	]
+}

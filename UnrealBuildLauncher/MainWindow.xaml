@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnrealBuildLauncher"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        
+        FontSize="16"
+        FontWeight="SemiBold"
+        Style="{DynamicResource CustomWindowStyle}"
+        
+        Title="Unreal Build Launcher" Height="720" Width="640">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
 
+        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True">
+            <StackPanel x:Name="CategoriesStackPanel">
+                <local:BuildConfigCategory/>
+                <local:BuildConfigCategory/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
