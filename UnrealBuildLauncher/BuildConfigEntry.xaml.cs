@@ -35,17 +35,12 @@ namespace UnrealBuildLauncher
 
         private bool CanLaunch()
         {
-            //return !string.IsNullOrEmpty(ConfigData.ExecPath) && !string.IsNullOrEmpty(ConfigData.ExecArgs);
-            return true;
+            return !string.IsNullOrEmpty(ConfigData.ExecPath) && !string.IsNullOrEmpty(ConfigData.ExecArgs);
         }
 
         private void LaunchBuild()
         {
-            string FileName = ConfigData.ExecPath;
-            string WorkingDirectory = Directory.GetCurrentDirectory();
-            string Arguments = ConfigData.ExecArgs;
-
-            var process = new Process
+            var BuildProcess = new Process
             {
                 StartInfo =
                 {
@@ -54,6 +49,7 @@ namespace UnrealBuildLauncher
                     Arguments = ConfigData.ExecArgs
                 }
             };
+            BuildProcess.Start(); // Starts detached
         }
     }
 }

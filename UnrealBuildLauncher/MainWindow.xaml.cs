@@ -1,5 +1,6 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -12,11 +13,7 @@ namespace UnrealBuildLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-#if DEBUG
-        const string ConfileFilePath = "C:\\Users\\jonat\\MyFiles\\CSharp-UnrealBuildLauncher\\UnrealBuildLauncher\\build_configs.json";
-#else
-        const string ConfileFilePath = "./";
-#endif
+        const string ConfigFileName = "build_configs.json";
 
         public MainWindow()
         {
@@ -60,7 +57,7 @@ namespace UnrealBuildLauncher
         {
             var OutData = new List<BuildConfigData>();
 
-            string TextContent = File.ReadAllText(ConfileFilePath);
+            string TextContent = File.ReadAllText(GetConfigFilePath());
             if (string.IsNullOrEmpty(TextContent))
                 return OutData;
 
@@ -68,13 +65,20 @@ namespace UnrealBuildLauncher
             if (BuildConfigsFile == null)
                 return OutData;
 
-            if (BuildConfigsFile.BuildConfigs == null)
-                return OutData;
-
             foreach (var BuildConfig in BuildConfigsFile.BuildConfigs)
                 OutData.Add(BuildConfig);
 
             return OutData;
+        }
+
+        public string GetConfigFilePath()
+        {
+#if DEBUG
+            string BaseFileDirectory = "./../../../";
+#else
+            string BaseFileDirectory = Directory.GetCurrentDirectory();
+#endif
+            return BaseFileDirectory + ConfigFileName;
         }
     }
 }
