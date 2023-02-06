@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="TextConfigName" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="Build Config Name" Padding="0,0,8,0"/>
-        <Button Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Padding="4" Click="OnLaunchButtonClicked">
+        <Button Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Padding="4" Click="OnClick_LaunchConfig">
             <TextBlock Text="Launch"/>
         </Button>
     </Grid>

@@ -1,5 +1,6 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -13,20 +14,26 @@ namespace UnrealBuildLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string ConfigFileName = "build_configs.json";
+        /* Member Variables */
+        private Dictionary<string, BuildConfigCategory> CategoryWidgets = new Dictionary<string, BuildConfigCategory>();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            // Cleanup placeholder controls
-            CategoriesStackPanel.Children.Clear();
+            RefreshWindow();
+        }
+
+        public void RefreshWindow()
+        {
+            // Reset Window
+            ClearErrorText();
+            ClearConfigWidgets();
 
             // Fetch build configs
             List<BuildConfigData> BuildConfigs = LoadBuildConfigs();
 
             // Populate Categories
-            var CategoryWidgets = new Dictionary<string, BuildConfigCategory>();
             foreach (var BuildConfig in BuildConfigs)
             {
                 if (string.IsNullOrEmpty(BuildConfig.BuildCategory))
@@ -58,9 +65,15 @@ namespace UnrealBuildLauncher
             var OutData = new List<BuildConfigData>();
 
             string ConfigFilePath = GetConfigFilePath();
+            if (string.IsNullOrEmpty(ConfigFilePath))
+            {
+                SetErrorText("No config file specified.");
+                return OutData;
+            }
+
             if (!File.Exists(ConfigFilePath))
             {
-                SetErrorText("Config file not found at \"" + ConfigFilePath + "\"");
+                SetErrorText("Config file not found at \"" + ConfigFilePath + "\".");
                 return OutData;
             }
 
@@ -89,7 +102,7 @@ namespace UnrealBuildLauncher
                 return OutData;
             }
 
-            if (BuildConfigsFile.BuildConfigs.Length == 0)
+            if (BuildConfigsFile.BuildConfigs.Count == 0)
             {
                 SetErrorText("Config file does not contain any build configuration!");
                 return OutData;
@@ -103,12 +116,7 @@ namespace UnrealBuildLauncher
 
         public string GetConfigFilePath()
         {
-#if DEBUG
-            string BaseFileDirectory = Path.GetFullPath("./../../../");
-#else
-            string BaseFileDirectory = Path.GetFullPath("./");
-#endif
-            return BaseFileDirectory + ConfigFileName;
+            return Properties.Settings.Default.ConfigFileLocation;
         }
 
         public void SetErrorText(string ErrorText)
@@ -121,6 +129,80 @@ namespace UnrealBuildLauncher
         {
             TextErrorTitle.Foreground = new SolidColorBrush(Colors.White);
             TextErrorPrompt.Text = "OK";
+        }
+
+        public void ClearConfigWidgets()
+        {
+            foreach (var CategoryWidget in CategoryWidgets.Values)
+            {
+                CategoryWidget.ClearConfigWidgets();
+            }
+            CategoriesStackPanel.Children.Clear();
+            CategoryWidgets.Clear();
+        }
+
+        public void OnClick_NewFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                Properties.Settings.Default.ConfigFileLocation = saveFileDialog.FileName;
+                Properties.Settings.Default.Save();
+
+                Stream stream;
+                if ((stream = saveFileDialog.OpenFile()) != null)
+                {
+                    // Create Template Data
+                    var ConfigFileTemplate = new BuildConfigsFile();
+                    ConfigFileTemplate.InitTemplate();
+
+                    // Serialize to JSON
+                    JsonSerializerOptions options = new JsonSerializerOptions();
+                    options.WriteIndented = true;
+                    string defaultFileContent = JsonSerializer.Serialize(ConfigFileTemplate, options);
+
+                    // Write to file
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(defaultFileContent);
+                    }
+
+                    stream.Close();
+                }
+
+                RefreshWindow();
+            }
+        }
+
+        public void OnClick_OpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json) |*.json|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Properties.Settings.Default.ConfigFileLocation = openFileDialog.FileName;
+                Properties.Settings.Default.Save();
+
+                RefreshWindow();
+            }
+        }
+
+        public void OnClick_SaveFile(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This feature is not yet implemented :P");
+
+            string ConfigFilePath = GetConfigFilePath();
+        }
+
+        public void OnClick_SaveFileAs(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This feature is not yet implemented :P");
+        }
+
+        public void OnClick_Exit(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

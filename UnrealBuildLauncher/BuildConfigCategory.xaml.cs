@@ -9,12 +9,15 @@ namespace UnrealBuildLauncher
     /// </summary>
     public partial class BuildConfigCategory : UserControl
     {
+        /* Member Variables */
+        public string BuildCategory { get; private set; } = "";
+
         public BuildConfigCategory()
         {
             InitializeComponent();
 
-            // Cleanup placeholder controls
-            BuildEntriesStackPanel.Children.Clear();
+            /* Remove placeholder widgets */
+            ClearConfigWidgets();
         }
 
         public void SetCategory(string Category)
@@ -30,6 +33,9 @@ namespace UnrealBuildLauncher
             BuildEntriesStackPanel.Children.Add(EntryWidget);
         }
 
-        public string BuildCategory { get; private set; } = "";
+        public void ClearConfigWidgets()
+        {
+            BuildEntriesStackPanel.Children.Clear();
+        }
     }
 }

@@ -12,27 +12,32 @@
         
         Title="Unreal Build Launcher" Height="720" Width="640">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-
-        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True">
-            <StackPanel x:Name="CategoriesStackPanel">
-                <local:BuildConfigCategory/>
-                <local:BuildConfigCategory/>
+        <DockPanel LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top">
+                <Menu TextElement.FontSize="14">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_New..." Click="OnClick_NewFile"/>
+                        <MenuItem Header="_Open..." Click="OnClick_OpenFile"/>
+                        <MenuItem Header="_Save..." Click="OnClick_SaveFile" IsEnabled="False"/>
+                        <MenuItem Header="Save_As..." Click="OnClick_SaveFile" IsEnabled="False"/>
+                        <Separator/>
+                        <MenuItem Header="_Exit" Click="OnClick_Exit"/>
+                    </MenuItem>
+                </Menu>
+                <Separator Padding="0" Margin="0"/>
             </StackPanel>
-        </ScrollViewer>
 
-        <StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
-            <TextBlock x:Name="TextErrorTitle" Text="Status:" VerticalAlignment="Center"/>
-            <TextBlock x:Name="TextErrorPrompt" Text="OK" VerticalAlignment="Center"/>
-        </StatusBar>
+            <StatusBar DockPanel.Dock="Bottom">
+                <TextBlock x:Name="TextErrorTitle" Text="Status:" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TextErrorPrompt" Text="OK" VerticalAlignment="Center"/>
+            </StatusBar>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True" >
+                <StackPanel x:Name="CategoriesStackPanel" Margin="20">
+                    <local:BuildConfigCategory/>
+                    <local:BuildConfigCategory/>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </Window>

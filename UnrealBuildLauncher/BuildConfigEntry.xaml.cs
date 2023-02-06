@@ -25,7 +25,7 @@ namespace UnrealBuildLauncher
             TextConfigName.Text = ConfigData.BuildName;
         }
 
-        private void OnLaunchButtonClicked(object sender, RoutedEventArgs e)
+        private void OnClick_LaunchConfig(object sender, RoutedEventArgs e)
         {
             if (CanLaunch())
             {
