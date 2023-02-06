@@ -1,10 +1,10 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Media;
 
 namespace UnrealBuildLauncher
 {
@@ -57,18 +57,43 @@ namespace UnrealBuildLauncher
         {
             var OutData = new List<BuildConfigData>();
 
-            if (!File.Exists(ConfigFileName))
+            string ConfigFilePath = GetConfigFilePath();
+            if (!File.Exists(ConfigFilePath))
             {
+                SetErrorText("Config file not found at \"" + ConfigFilePath + "\"");
                 return OutData;
             }
 
-            string TextContent = File.ReadAllText(GetConfigFilePath());
+            string TextContent = File.ReadAllText(ConfigFilePath);
             if (string.IsNullOrEmpty(TextContent))
+            {
+                SetErrorText("Config file seems to be empty!");
                 return OutData;
+            }
 
-            var BuildConfigsFile = JsonSerializer.Deserialize<BuildConfigsFile>(TextContent);
-            if (BuildConfigsFile == null)
+            BuildConfigsFile? BuildConfigsFile = null;
+            try
+            {
+                JsonSerializerOptions Options = new JsonSerializerOptions();
+                Options.AllowTrailingCommas = true;
+                BuildConfigsFile = JsonSerializer.Deserialize<BuildConfigsFile>(TextContent, Options);
+            }
+            catch
+            {
+                SetErrorText("Failed to extract build configurations! The config file contains invalid JSON!");
                 return OutData;
+            }
+            if (BuildConfigsFile == null)
+            {
+                SetErrorText("Failed to extract build configurations from config file! Verify file format!");
+                return OutData;
+            }
+
+            if (BuildConfigsFile.BuildConfigs.Length == 0)
+            {
+                SetErrorText("Config file does not contain any build configuration!");
+                return OutData;
+            }
 
             foreach (var BuildConfig in BuildConfigsFile.BuildConfigs)
                 OutData.Add(BuildConfig);
@@ -79,11 +104,23 @@ namespace UnrealBuildLauncher
         public string GetConfigFilePath()
         {
 #if DEBUG
-            string BaseFileDirectory = "./../../../";
+            string BaseFileDirectory = Path.GetFullPath("./../../../");
 #else
-            string BaseFileDirectory = "./";
+            string BaseFileDirectory = Path.GetFullPath("./");
 #endif
             return BaseFileDirectory + ConfigFileName;
+        }
+
+        public void SetErrorText(string ErrorText)
+        {
+            TextErrorTitle.Foreground = new SolidColorBrush(Colors.Red);
+            TextErrorPrompt.Text = ErrorText;
+        }
+
+        public void ClearErrorText()
+        {
+            TextErrorTitle.Foreground = new SolidColorBrush(Colors.White);
+            TextErrorPrompt.Text = "OK";
         }
     }
 }

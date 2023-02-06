@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True">
@@ -29,5 +29,10 @@
                 <local:BuildConfigCategory/>
             </StackPanel>
         </ScrollViewer>
+
+        <StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <TextBlock x:Name="TextErrorTitle" Text="Status:" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TextErrorPrompt" Text="OK" VerticalAlignment="Center"/>
+        </StatusBar>
     </Grid>
 </Window>
