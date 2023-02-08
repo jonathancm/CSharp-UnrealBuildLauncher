@@ -27,9 +27,10 @@
                 <Separator Padding="0" Margin="0"/>
             </StackPanel>
 
-            <StatusBar DockPanel.Dock="Bottom">
-                <TextBlock x:Name="TextErrorTitle" Text="Status:" VerticalAlignment="Center"/>
-                <TextBlock x:Name="TextErrorPrompt" Text="OK" VerticalAlignment="Center"/>
+            <StatusBar DockPanel.Dock="Bottom" >
+                <Ellipse x:Name="StatusIndicator" Width="20" Height="20" Fill="#FF009051" Stroke="#FF1D1D1D" StrokeThickness="3"/>
+                <Separator Margin="4,0,4,0"/>
+                <TextBlock x:Name="TextErrorPrompt" Text="" VerticalAlignment="Center"/>
             </StatusBar>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True" >

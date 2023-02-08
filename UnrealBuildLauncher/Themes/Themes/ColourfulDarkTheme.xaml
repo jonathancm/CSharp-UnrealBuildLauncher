@@ -4501,5 +4501,17 @@
         </Style.Triggers>
     </Style>
 
+    <!-- StatusBar -->
+    <Style TargetType="{x:Type StatusBar}">
+        <Setter Property="Background" Value="{StaticResource ControlBrightDefaultBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBrightDefaultBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlDefaultForeground}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextElement.FontSize" Value="14" />
+        <Setter Property="Padding" Value="4" />
+    </Style>
+
     <!-- -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- -->
 </ResourceDictionary>

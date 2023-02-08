@@ -10,6 +10,4 @@ Launcher app for Unreal Builds
 	- Wait X seconds
 	- Launch game instance 1
 	- Launch game instance 2
-4. Collapsible Categories
-5. Improve colors to make them more readable on dark background
-6. Make an icon for the app
+4. Make an icon for the app

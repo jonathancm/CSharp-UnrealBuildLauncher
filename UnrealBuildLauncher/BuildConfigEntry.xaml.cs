@@ -35,7 +35,16 @@ namespace UnrealBuildLauncher
 
         private bool CanLaunch()
         {
-            return !string.IsNullOrEmpty(ConfigData.ExecPath) && !string.IsNullOrEmpty(ConfigData.ExecArgs);
+            if (string.IsNullOrEmpty(ConfigData.ExecPath))
+                return false;
+
+            if (string.IsNullOrEmpty(ConfigData.ExecArgs))
+                return false;
+
+            if (!File.Exists(ConfigData.ExecPath))
+                return false;
+
+            return true;
         }
 
         private void LaunchBuild()

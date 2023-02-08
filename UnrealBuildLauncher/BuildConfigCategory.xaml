@@ -17,11 +17,14 @@
             <RowDefinition Height="16"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="TextBlockCategoryName" Grid.Column="0" Grid.Row="0" Text="Build Category"/>
-        <Separator Grid.Column="0" Grid.Row="1" Background="#FF8C8C8C"/>
-        <StackPanel x:Name="BuildEntriesStackPanel" Grid.Column="0" Grid.Row="2">
-            <local:BuildConfigEntry Margin="0,8,0,0"/>
-            <local:BuildConfigEntry Margin="0,8,0,0"/>
-        </StackPanel>
+        <Expander Grid.Column="0" Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock x:Name="TextBlockCategoryName" Text="Build Category" FontSize="16" FontWeight="Bold"/>
+            </Expander.Header>
+            <StackPanel x:Name="BuildEntriesStackPanel" Grid.Column="0" Grid.Row="2">
+                <local:BuildConfigEntry Margin="0,8,0,0"/>
+                <local:BuildConfigEntry Margin="0,8,0,0"/>
+            </StackPanel>
+        </Expander>
     </Grid>
 </UserControl>

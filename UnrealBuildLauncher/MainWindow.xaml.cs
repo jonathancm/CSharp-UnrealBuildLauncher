@@ -121,14 +121,14 @@ namespace UnrealBuildLauncher
 
         public void SetErrorText(string ErrorText)
         {
-            TextErrorTitle.Foreground = new SolidColorBrush(Colors.Red);
+            StatusIndicator.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF900021"));
             TextErrorPrompt.Text = ErrorText;
         }
 
         public void ClearErrorText()
         {
-            TextErrorTitle.Foreground = new SolidColorBrush(Colors.White);
-            TextErrorPrompt.Text = "OK";
+            StatusIndicator.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF009051"));
+            TextErrorPrompt.Text = "";
         }
 
         public void ClearConfigWidgets()
