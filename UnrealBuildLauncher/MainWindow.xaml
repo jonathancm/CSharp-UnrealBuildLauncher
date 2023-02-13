@@ -28,7 +28,7 @@
             </StackPanel>
 
             <StatusBar DockPanel.Dock="Bottom" >
-                <Ellipse x:Name="StatusIndicator" Width="20" Height="20" Fill="#FF009051" Stroke="#FF1D1D1D" StrokeThickness="3"/>
+                <Image x:Name="StatusIcon" Height="24" Width="24"/>
                 <Separator Margin="4,0,4,0"/>
                 <TextBlock x:Name="TextErrorPrompt" Text="" VerticalAlignment="Center"/>
             </StatusBar>

@@ -7,10 +7,11 @@
              mc:Ignorable="d" 
              
              Margin="0,4,0,4"
-             d:DesignHeight="200" d:DesignWidth="800" Background="#FF151515">
+             d:DesignHeight="48" d:DesignWidth="350" Background="#FF151515">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
@@ -22,9 +23,25 @@
             <RowDefinition Height="8"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="TextConfigName" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="Build Config Name" Padding="0,0,8,0"/>
-        <Button Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Padding="4" Click="OnClick_LaunchConfig">
-            <TextBlock Text="Launch"/>
+        <!--This button is temporarily collapsed!-->
+        <Button Grid.Row="1" Grid.Column="1" Padding="4" Click="OnClick_EditConfig" Visibility="Collapsed">
+            <Image Source="Assets/pencil-edit.png" Width="20" Height="20"/>
+        </Button>
+
+        <!--Config name and error label-->
+        <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center">
+            <TextBlock x:Name="TextConfigName" VerticalAlignment="Center" Text="Build Config Name" Padding="8,0,8,0"/>
+            <StackPanel x:Name="PanelErrorPrompt" Orientation="Horizontal" Visibility="Collapsed">
+                <Border BorderThickness="0" Padding="4,0,4,0" Width="24" Height="24">
+                    <Image Source="Assets/exclamation-triangle.png"/>
+                </Border>
+                <TextBlock x:Name="TextErrorPrompt" VerticalAlignment="Center" Foreground="Gray" Text="Error description"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!--Launch Button-->
+        <Button x:Name="ButtonLaunch" Grid.Row="1" Grid.Column="4" Padding="4" Click="OnClick_LaunchConfig">
+            <TextBlock Text="Launch" VerticalAlignment="Center"/>
         </Button>
     </Grid>
 </UserControl>

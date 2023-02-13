@@ -1,5 +1,6 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -23,27 +24,38 @@ namespace UnrealBuildLauncher
         {
             ConfigData = Data;
             TextConfigName.Text = ConfigData.BuildName;
+
+            string outputError = "";
+            bool isLaunchAllowed = CanLaunch(out outputError);
+            ButtonLaunch.IsEnabled = isLaunchAllowed;
+            PanelErrorPrompt.Visibility = isLaunchAllowed ? Visibility.Collapsed : Visibility.Visible;
+            TextErrorPrompt.Text = outputError;
         }
 
         private void OnClick_LaunchConfig(object sender, RoutedEventArgs e)
         {
-            if (CanLaunch())
+            string outputError = "";
+            if (CanLaunch(out outputError))
             {
                 LaunchBuild();
             }
         }
 
-        private bool CanLaunch()
+        private bool CanLaunch(out string errorOutput)
         {
             if (string.IsNullOrEmpty(ConfigData.ExecPath))
+            {
+                errorOutput = "Path to executable is empty!";
                 return false;
-
-            if (string.IsNullOrEmpty(ConfigData.ExecArgs))
-                return false;
+            }
 
             if (!File.Exists(ConfigData.ExecPath))
+            {
+                errorOutput = "Could not find exectuable at specified path!";
                 return false;
+            }
 
+            errorOutput = "";
             return true;
         }
 
@@ -58,7 +70,23 @@ namespace UnrealBuildLauncher
                     Arguments = ConfigData.ExecArgs
                 }
             };
-            BuildProcess.Start(); // Starts detached
+
+            try
+            {
+                BuildProcess.Start(); // Starts detached
+            }
+            catch (Exception exception)
+            {
+                Trace.TraceError(exception.ToString());
+
+                string appName = System.AppDomain.CurrentDomain.FriendlyName;
+                MessageBox.Show(exception.ToString(), appName, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OnClick_EditConfig(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace UnrealBuildLauncher
 {
@@ -16,12 +18,33 @@ namespace UnrealBuildLauncher
     {
         /* Member Variables */
         private Dictionary<string, BuildConfigCategory> CategoryWidgets = new Dictionary<string, BuildConfigCategory>();
+        private BitmapImage? ImageCheckMark = null;
+        private BitmapImage? ImageWarning = null;
 
         public MainWindow()
         {
+            InitializeLog();
+
             InitializeComponent();
+            InitializeImages();
 
             RefreshWindow();
+        }
+
+        private void InitializeLog()
+        {
+            string appName = System.AppDomain.CurrentDomain.FriendlyName;
+            Trace.Listeners.Add(new TextWriterTraceListener(appName + ".log"));
+            Trace.IndentSize = 4;
+            Trace.AutoFlush = true;
+        }
+
+        private void InitializeImages()
+        {
+            var uriSourceCheckmark = new Uri(@"/UnrealBuildLauncher;component/Assets/check-circle.png", UriKind.Relative);
+            ImageCheckMark = new BitmapImage(uriSourceCheckmark);
+            var uriSourceWarning = new Uri(@"/UnrealBuildLauncher;component/Assets/exclamation-triangle.png", UriKind.Relative);
+            ImageWarning = new BitmapImage(uriSourceWarning);
         }
 
         public void RefreshWindow()
@@ -91,8 +114,10 @@ namespace UnrealBuildLauncher
                 Options.AllowTrailingCommas = true;
                 BuildConfigsFile = JsonSerializer.Deserialize<BuildConfigsFile>(TextContent, Options);
             }
-            catch
+            catch (Exception exception)
             {
+                Trace.TraceError(exception.ToString());
+
                 SetErrorText("Failed to extract build configurations! The config file contains invalid JSON!");
                 return OutData;
             }
@@ -109,7 +134,19 @@ namespace UnrealBuildLauncher
             }
 
             foreach (var BuildConfig in BuildConfigsFile.BuildConfigs)
+            {
+                if (string.IsNullOrEmpty(BuildConfig.BuildName))
+                {
+                    BuildConfig.BuildName = "Unnamed config entry";
+                }
+
+                if (string.IsNullOrEmpty(BuildConfig.BuildCategory))
+                {
+                    BuildConfig.BuildCategory = "Default Category";
+                }
+
                 OutData.Add(BuildConfig);
+            }
 
             return OutData;
         }
@@ -121,13 +158,13 @@ namespace UnrealBuildLauncher
 
         public void SetErrorText(string ErrorText)
         {
-            StatusIndicator.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF900021"));
+            StatusIcon.Source = ImageWarning;
             TextErrorPrompt.Text = ErrorText;
         }
 
         public void ClearErrorText()
         {
-            StatusIndicator.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF009051"));
+            StatusIcon.Source = ImageCheckMark;
             TextErrorPrompt.Text = "";
         }
 

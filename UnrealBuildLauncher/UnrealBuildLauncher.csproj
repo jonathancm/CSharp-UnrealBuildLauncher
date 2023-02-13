@@ -10,8 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\check-circle.png" />
+    <None Remove="Assets\ellipsis-h.png" />
+    <None Remove="Assets\ellipsis-v.png" />
+    <None Remove="Assets\exclamation-triangle.png" />
     <None Remove="Assets\launch.ico" />
     <None Remove="Assets\launch.png" />
+    <None Remove="Assets\pencil-edit.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,12 +24,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\check-circle.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ellipsis-h.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ellipsis-v.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\exclamation-triangle.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\launch.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\launch.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\pencil-edit.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
