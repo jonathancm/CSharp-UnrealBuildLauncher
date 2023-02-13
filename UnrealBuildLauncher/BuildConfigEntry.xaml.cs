@@ -51,7 +51,7 @@ namespace UnrealBuildLauncher
 
             if (!File.Exists(ConfigData.ExecPath))
             {
-                errorOutput = "Could not find exectuable at specified path!";
+                errorOutput = "Could not find executable at specified path!";
                 return false;
             }
 
