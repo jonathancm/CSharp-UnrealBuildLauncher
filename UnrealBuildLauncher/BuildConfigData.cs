@@ -8,5 +8,20 @@ namespace UnrealBuildLauncher
         public string BuildCategory { get; set; } = "";
         public string ExecPath { get; set; } = "";
         public string ExecArgs { get; set; } = "";
+
+        public void Sanitize()
+        {
+            BuildName.TrimStart();
+            BuildName.TrimEnd();
+
+            BuildCategory.TrimStart();
+            BuildCategory.TrimEnd();
+
+            ExecPath.TrimStart();
+            ExecPath.TrimEnd();
+
+            ExecArgs.TrimStart();
+            ExecArgs.TrimEnd();
+        }
     }
 }

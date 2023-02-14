@@ -86,7 +86,14 @@ namespace UnrealBuildLauncher
 
         private void OnClick_EditConfig(object sender, RoutedEventArgs e)
         {
+            var configEditWindow = new ConfigEditWindow(ConfigData);
 
+            configEditWindow.Owner = Window.GetWindow(this);
+            bool? isConfigApplied = configEditWindow.ShowDialog();
+            if (isConfigApplied.HasValue && isConfigApplied.Value == true)
+            {
+                ConfigData = configEditWindow.ConfigData;
+            }
         }
     }
 }
