@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+
+using System.Windows;
 
 namespace UnrealBuildLauncher
 {
@@ -36,6 +38,16 @@ namespace UnrealBuildLauncher
         {
             DialogResult = false;
             Close();
+        }
+
+        private void OnClick_OpenFileDialog(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "EXE files (*.exe) |*.exe|BAT files (*.bat)|*.bat|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                TextBoxExecPath.Text = openFileDialog.FileName;
+            }
         }
     }
 }

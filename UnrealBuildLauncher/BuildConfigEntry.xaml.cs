@@ -93,6 +93,7 @@ namespace UnrealBuildLauncher
             if (isConfigApplied.HasValue && isConfigApplied.Value == true)
             {
                 ConfigData = configEditWindow.ConfigData;
+                // Trigger timed refresh on parent
             }
         }
     }

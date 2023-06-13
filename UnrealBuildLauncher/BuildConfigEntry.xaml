@@ -24,8 +24,8 @@
         </Grid.RowDefinitions>
 
         <!--This button is temporarily collapsed!-->
-        <Button Grid.Row="1" Grid.Column="1" Padding="8,4,8,4" Click="OnClick_EditConfig">
-            <Image Source="Assets/pencil-edit.png" Width="24" Height="24"/>
+        <Button Grid.Row="1" Grid.Column="1" Padding="6,4,6,4" Click="OnClick_EditConfig">
+            <Image Source="Assets/pencil-edit.png" Width="16" Height="16"/>
         </Button>
 
         <!--Config name and error label-->

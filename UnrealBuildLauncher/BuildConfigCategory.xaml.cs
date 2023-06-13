@@ -1,5 +1,6 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace UnrealBuildLauncher
@@ -36,6 +37,17 @@ namespace UnrealBuildLauncher
         public void ClearConfigWidgets()
         {
             BuildEntriesStackPanel.Children.Clear();
+        }
+
+        public List<BuildConfigData> GetEntriesData()
+        {
+            List<BuildConfigData> buildConfigEntries = new List<BuildConfigData>();
+            foreach (BuildConfigEntry Entry in BuildEntriesStackPanel.Children)
+            {
+                buildConfigEntries.Add(Entry.ConfigData);
+            }
+
+            return buildConfigEntries;
         }
     }
 }

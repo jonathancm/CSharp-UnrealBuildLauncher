@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\launch.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\check-circle.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

@@ -1,6 +1,7 @@
 ﻿// Copyright(C) 2023 Jonathan Caron-Mailhot - All Rights Reserved
 
 using Microsoft.Win32;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -227,14 +228,64 @@ namespace UnrealBuildLauncher
 
         public void OnClick_SaveFile(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This feature is not yet implemented :P");
-
             string ConfigFilePath = GetConfigFilePath();
+
+            if (!File.Exists(ConfigFilePath))
+            {
+                return;
+            }
+
+            // Prepare Template Data
+            var ConfigFileTemplate = new BuildConfigsFile();
+            foreach (var CategoryWidget in CategoryWidgets)
+            {
+                ConfigFileTemplate.BuildConfigs.AddRange(CategoryWidget.Value.GetEntriesData());
+            }
+
+            // Serialize to JSON
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            string fileContent = JsonSerializer.Serialize(ConfigFileTemplate, options);
+
+            // Write to file
+            File.WriteAllText(ConfigFilePath, fileContent);
         }
 
         public void OnClick_SaveFileAs(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This feature is not yet implemented :P");
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                Properties.Settings.Default.ConfigFileLocation = saveFileDialog.FileName;
+                Properties.Settings.Default.Save();
+
+                Stream stream;
+                if ((stream = saveFileDialog.OpenFile()) != null)
+                {
+                    // Create Template Data
+                    var ConfigFileTemplate = new BuildConfigsFile();
+                    foreach (var CategoryWidget in CategoryWidgets)
+                    {
+                        ConfigFileTemplate.BuildConfigs.AddRange(CategoryWidget.Value.GetEntriesData());
+                    }
+
+                    // Serialize to JSON
+                    JsonSerializerOptions options = new JsonSerializerOptions();
+                    options.WriteIndented = true;
+                    string fileContent = JsonSerializer.Serialize(ConfigFileTemplate, options);
+
+                    // Write to file
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(fileContent);
+                    }
+
+                    stream.Close();
+                }
+
+                RefreshWindow();
+            }
         }
 
         public void OnClick_Exit(object sender, RoutedEventArgs e)

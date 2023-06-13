@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnrealBuildLauncher"
         mc:Ignorable="d"
-        
+
         FontSize="16"
         FontWeight="SemiBold"
         Style="{DynamicResource CustomWindowStyle}"
-        
+
+        Icon="Assets/launch.ico"
         Title="Edit Configuration" Height="400" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,16 +28,21 @@
 
         <StackPanel Grid.Column="1" Grid.Row="1">
             <TextBlock Text="Config Name"/>
-            <TextBox x:Name="TextBoxConfigName" Padding="4" FontSize="14"/>
+            <TextBox x:Name="TextBoxConfigName" Padding="4" FontSize="14" VerticalContentAlignment="Center"/>
             <Separator Background="Transparent" Margin="8"/>
             <TextBlock Text="Config Category"/>
-            <TextBox x:Name="TextBoxConfigCategory" Padding="4" FontSize="14"/>
+            <TextBox x:Name="TextBoxConfigCategory" Padding="4" FontSize="14" VerticalContentAlignment="Center"/>
             <Separator Background="Transparent" Margin="8"/>
             <TextBlock Text="Path to Executable"/>
-            <TextBox x:Name="TextBoxExecPath" Padding="4" FontSize="14"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Padding="8,4" Click="OnClick_OpenFileDialog">
+                    <Image Source="Assets/ellipsis-h.png" Width="24" Height="24"/>
+                </Button>
+                <TextBox x:Name="TextBoxExecPath" Padding="4" FontSize="14" VerticalContentAlignment="Center"/>
+            </DockPanel>
             <Separator Background="Transparent" Margin="8"/>
             <TextBlock Text="Executable Arguments"/>
-            <TextBox x:Name="TextBoxExecArgs" Padding="4" FontSize="14"/>
+            <TextBox x:Name="TextBoxExecArgs" Padding="4" FontSize="14" VerticalContentAlignment="Center"/>
             <Separator Background="Transparent" Margin="8"/>
         </StackPanel>
 

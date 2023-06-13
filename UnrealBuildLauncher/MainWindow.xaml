@@ -9,7 +9,8 @@
         FontSize="16"
         FontWeight="SemiBold"
         Style="{DynamicResource CustomWindowStyle}"
-        
+
+        Icon="Assets/launch.ico"
         Title="Unreal Build Launcher" Height="720" Width="640">
     <Grid>
         <DockPanel LastChildFill="True">
@@ -18,8 +19,8 @@
                     <MenuItem Header="_File">
                         <MenuItem Header="_New..." Click="OnClick_NewFile"/>
                         <MenuItem Header="_Open..." Click="OnClick_OpenFile"/>
-                        <MenuItem Header="_Save..." Click="OnClick_SaveFile" IsEnabled="False"/>
-                        <MenuItem Header="Save_As..." Click="OnClick_SaveFile" IsEnabled="False"/>
+                        <MenuItem Header="_Save..." Click="OnClick_SaveFile"/>
+                        <MenuItem Header="Save_As..." Click="OnClick_SaveFileAs"/>
                         <Separator/>
                         <MenuItem Header="_Exit" Click="OnClick_Exit"/>
                     </MenuItem>

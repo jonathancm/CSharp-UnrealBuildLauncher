@@ -3564,6 +3564,7 @@
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{StaticResource ControlDefaultForeground}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -4080,9 +4081,10 @@
                                       Background="{TemplateBinding BorderBrush}"
                                       VerticalAlignment="Top" Margin="0">
                                     <DockPanel Margin="0,0,130,0">
-                                        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,4,0,0" Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" Height="24" />
-                                        <TextBlock Margin="5,3"
-                                                   VerticalAlignment="Center"
+                                        <Border BorderThickness="0" Padding="6,0">
+                                            <Image Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="16" MaxWidth="16"/>
+                                        </Border>
+                                        <TextBlock VerticalAlignment="Center"
                                                    HorizontalAlignment="Stretch"
                                                    FontSize="14" Width="Auto"
                                                    TextWrapping="NoWrap"
@@ -4111,7 +4113,13 @@
                                                 BorderBrush="Transparent"
                                                 Width="40"
                                                 WindowChrome.IsHitTestVisibleInChrome="True"
-                                                Click="AutoMinimize_Event" />
+                                                Click="AutoMinimize_Event" >
+                                            <Grid Width="12" Height="12">
+                                                <Rectangle StrokeThickness="2"
+                                                   Stroke="{StaticResource ControlGlythColour}"
+                                                   Margin="0" />
+                                            </Grid>
+                                        </Button>
                                         <Button x:Name="btnClose"
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
@@ -4129,7 +4137,7 @@
                             </Grid>
                         </Border>
                     </Grid>
-                    <ControlTemplate.Triggers>
+                    <!--<ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter TargetName="btnRestore" Property="Content">
                                 <Setter.Value>
@@ -4167,7 +4175,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                    </ControlTemplate.Triggers>
+                    </ControlTemplate.Triggers>-->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
