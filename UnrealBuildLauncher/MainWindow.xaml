@@ -24,6 +24,9 @@
                         <Separator/>
                         <MenuItem Header="_Exit" Click="OnClick_Exit"/>
                     </MenuItem>
+                    <MenuItem Header="_Tools">
+                        <MenuItem Header="Show in Explorer" Click="OnClick_ShowInExplorer"/>
+                    </MenuItem>
                 </Menu>
                 <Separator Padding="0" Margin="0"/>
             </StackPanel>

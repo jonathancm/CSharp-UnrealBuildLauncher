@@ -53,6 +53,7 @@ namespace UnrealBuildLauncher
             // Reset Window
             ClearErrorText();
             ClearConfigWidgets();
+            UpdateWindowTitle();
 
             // Fetch build configs
             List<BuildConfigData> BuildConfigs = LoadBuildConfigs();
@@ -81,6 +82,20 @@ namespace UnrealBuildLauncher
                     continue;
 
                 CategoryWidgets[BuildConfig.BuildCategory].AddEntryWidget(BuildConfig);
+            }
+        }
+
+        public void UpdateWindowTitle()
+        {
+            const string BaseTitle = "Unreal Build Launcher";
+            string configFilePath = GetConfigFilePath();
+            if (File.Exists(configFilePath))
+            {
+                Title = BaseTitle + " - " + Path.GetFileName(configFilePath);
+            }
+            else
+            {
+                Title = BaseTitle;
             }
         }
 
@@ -291,6 +306,19 @@ namespace UnrealBuildLauncher
         public void OnClick_Exit(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void OnClick_ShowInExplorer(object sender, RoutedEventArgs e)
+        {
+            string configFilePath = GetConfigFilePath();
+            if (!File.Exists(configFilePath))
+            {
+                return;
+            }
+
+            // Open explorer window
+            string argument = "/select, \"" + configFilePath + "\"";
+            Process.Start("explorer.exe", argument);
         }
     }
 }
