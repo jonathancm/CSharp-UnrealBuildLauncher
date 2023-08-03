@@ -29,18 +29,10 @@ namespace UnrealBuildLauncher
             TextConfigName.Text = ConfigData.BuildName;
 
             string outputError = "";
-            if (CanLaunch(out outputError))
-            {
-                ButtonLaunch.IsEnabled = true;
-                ImageConfigWarning.Visibility = Visibility.Collapsed;
-                TextConfigDescription.Text = ConfigData.ExecArgs.ToString();
-            }
-            else
-            {
-                ButtonLaunch.IsEnabled = false;
-                ImageConfigWarning.Visibility = Visibility.Visible;
-                TextConfigDescription.Text = outputError;
-            }
+            bool isLaunchAllowed = CanLaunch(out outputError);
+            ButtonLaunch.IsEnabled = isLaunchAllowed;
+            PanelConfigDescription.Visibility = isLaunchAllowed ? Visibility.Collapsed : Visibility.Visible;
+            TextConfigDescription.Text = outputError;
         }
 
         private void OnClick_LaunchConfig(object sender, RoutedEventArgs e)

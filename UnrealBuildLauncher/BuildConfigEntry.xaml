@@ -32,8 +32,8 @@
         <Border Grid.Row="1" Grid.Column="2" Padding="8,0,0,0">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock x:Name="TextConfigName" VerticalAlignment="Center" Text="Build Config Name" Padding="0,0,8,0"/>
-                <StackPanel Orientation="Horizontal">
-                    <Border x:Name="ImageConfigWarning" BorderThickness="0" Padding="0,0,4,0" Width="24" Height="24" Visibility="Collapsed">
+                <StackPanel x:Name="PanelConfigDescription" Orientation="Horizontal">
+                    <Border x:Name="ImageConfigWarning" BorderThickness="0" Padding="0,0,4,0" Width="24" Height="24">
                         <Image Source="Assets/exclamation-triangle.png"/>
                     </Border>
                     <TextBlock x:Name="TextConfigDescription" VerticalAlignment="Center" Foreground="Gray" Text="Config description"/>
