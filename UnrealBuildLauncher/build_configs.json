@@ -1,29 +1,29 @@
 {
-	"Version": "0.3",
-	"BuildConfigs": [
-		{
-			"BuildName": "FL Lobby Server",
-			"BuildCategory": "Local Cook",
-			"ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
-			"ExecArgs": "TestMap_Lobby?listen -windowed -resx=960 -resy=540"
-		},
-		{
-			"BuildName": "FL Metagame Server",
-			"BuildCategory": "Local Cook",
-			"ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
-			"ExecArgs": "TestMap_Metagame?listen -windowed -resx=960 -resy=540"
-		},
-		{
-			"BuildName": "FL LocalHost Client",
-			"BuildCategory": "Local Cook",
-			"ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
-			"ExecArgs": "127.0.0.1 -windowed -resx=960 -resy=540"
-		},
-		{
-			"BuildName": "FL Nightly",
-			"BuildCategory": "Nightly WinGDK",
-			"ExecPath": "D:\\Production\\FairlightBuilds\\whistler\\fairlight-release\\FairlightConcept\\Nightly\\1371937\\WinGDK\\DevelopmentTestProfile_Loose\\1260559\\Unzipped\\FairlightConcept\\Binaries\\WinGDK\\FairlightConcept.exe",
-			"ExecArgs": "-windowed -resx=960 -resy=540"
-		}
-	]
+  "Version": "0.3",
+  "BuildConfigs": [
+    {
+      "BuildName": "FL Lobby Server",
+      "BuildCategory": "Local Cook",
+      "ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
+      "ExecArgs": "TestMap_Lobby?listen -windowed -resx=960 -resy=540"
+    },
+    {
+      "BuildName": "FL Metagame Server",
+      "BuildCategory": "Local Cook",
+      "ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
+      "ExecArgs": "TestMap_Metagame?listen -windowed -resx=960 -resy=540"
+    },
+    {
+      "BuildName": "FL LocalHost Client",
+      "BuildCategory": "Local Cook",
+      "ExecPath": "D:\\Production\\Whistler\\ue5\\TCGames\\FairlightConcept\\Saved\\StagedBuilds\\Windows\\FairlightConcept.exe",
+      "ExecArgs": "127.0.0.1 -windowed -resx=960 -resy=540"
+    },
+    {
+      "BuildName": "FL Nightly",
+      "BuildCategory": "Nightly WinGDK",
+      "ExecPath": "D:\\Production\\FairlightBuilds\\whistler\\fairlight-release\\FairlightConcept\\Nightly\\1371937\\WinGDK\\DevelopmentTestProfile_Loose\\1260559\\Unzipped\\FairlightConcept\\Binaries\\WinGDK\\FairlightConcept.exe",
+      "ExecArgs": "-windowed -resx=960 -resy=540"
+    }
+  ]
 }

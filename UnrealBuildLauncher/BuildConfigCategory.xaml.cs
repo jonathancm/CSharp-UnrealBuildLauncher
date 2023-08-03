@@ -27,11 +27,12 @@ namespace UnrealBuildLauncher
             TextBlockCategoryName.Text = Category;
         }
 
-        public void AddEntryWidget(BuildConfigData Data)
+        public BuildConfigEntry AddEntryWidget(BuildConfigData Data)
         {
             var EntryWidget = new BuildConfigEntry();
             EntryWidget.SetData(Data);
             BuildEntriesStackPanel.Children.Add(EntryWidget);
+            return EntryWidget;
         }
 
         public void ClearConfigWidgets()

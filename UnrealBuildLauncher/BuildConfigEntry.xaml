@@ -29,15 +29,17 @@
         </Button>
 
         <!--Config name and error label-->
-        <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center">
-            <TextBlock x:Name="TextConfigName" VerticalAlignment="Center" Text="Build Config Name" Padding="8,0,8,0"/>
-            <StackPanel x:Name="PanelErrorPrompt" Orientation="Horizontal" Visibility="Collapsed">
-                <Border BorderThickness="0" Padding="4,0,4,0" Width="24" Height="24">
-                    <Image Source="Assets/exclamation-triangle.png"/>
-                </Border>
-                <TextBlock x:Name="TextErrorPrompt" VerticalAlignment="Center" Foreground="Gray" Text="Error description"/>
+        <Border Grid.Row="1" Grid.Column="2" Padding="8,0,0,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="TextConfigName" VerticalAlignment="Center" Text="Build Config Name" Padding="0,0,8,0"/>
+                <StackPanel Orientation="Horizontal">
+                    <Border x:Name="ImageConfigWarning" BorderThickness="0" Padding="0,0,4,0" Width="24" Height="24" Visibility="Collapsed">
+                        <Image Source="Assets/exclamation-triangle.png"/>
+                    </Border>
+                    <TextBlock x:Name="TextConfigDescription" VerticalAlignment="Center" Foreground="Gray" Text="Config description"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Border>
 
         <!--Launch Button-->
         <Button x:Name="ButtonLaunch" Grid.Row="1" Grid.Column="4" Padding="4" Click="OnClick_LaunchConfig">

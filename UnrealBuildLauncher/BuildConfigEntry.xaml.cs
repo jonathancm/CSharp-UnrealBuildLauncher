@@ -8,12 +8,15 @@ using System.Windows.Controls;
 
 namespace UnrealBuildLauncher
 {
+    public delegate void OnBuildConfigEntryModified();
+
     /// <summary>
     /// Interaction logic for BuildConfigEntry.xaml
     /// </summary>
     public partial class BuildConfigEntry : UserControl
     {
         public BuildConfigData ConfigData { get; private set; } = new BuildConfigData();
+        public OnBuildConfigEntryModified? onBuildConfigEntryModified = null;
 
         public BuildConfigEntry()
         {
@@ -26,10 +29,18 @@ namespace UnrealBuildLauncher
             TextConfigName.Text = ConfigData.BuildName;
 
             string outputError = "";
-            bool isLaunchAllowed = CanLaunch(out outputError);
-            ButtonLaunch.IsEnabled = isLaunchAllowed;
-            PanelErrorPrompt.Visibility = isLaunchAllowed ? Visibility.Collapsed : Visibility.Visible;
-            TextErrorPrompt.Text = outputError;
+            if (CanLaunch(out outputError))
+            {
+                ButtonLaunch.IsEnabled = true;
+                ImageConfigWarning.Visibility = Visibility.Collapsed;
+                TextConfigDescription.Text = ConfigData.ExecArgs.ToString();
+            }
+            else
+            {
+                ButtonLaunch.IsEnabled = false;
+                ImageConfigWarning.Visibility = Visibility.Visible;
+                TextConfigDescription.Text = outputError;
+            }
         }
 
         private void OnClick_LaunchConfig(object sender, RoutedEventArgs e)
@@ -92,8 +103,11 @@ namespace UnrealBuildLauncher
             bool? isConfigApplied = configEditWindow.ShowDialog();
             if (isConfigApplied.HasValue && isConfigApplied.Value == true)
             {
-                ConfigData = configEditWindow.ConfigData;
-                // Trigger timed refresh on parent
+                SetData(configEditWindow.ConfigData);
+                if (onBuildConfigEntryModified != null)
+                {
+                    onBuildConfigEntryModified();
+                }
             }
         }
     }

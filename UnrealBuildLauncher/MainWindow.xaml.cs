@@ -12,15 +12,23 @@ using System.Windows.Media.Imaging;
 
 namespace UnrealBuildLauncher
 {
+    enum LauncherTab
+    {
+        PersonalConfig,
+        SharedConfig
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         /* Member Variables */
-        private Dictionary<string, BuildConfigCategory> CategoryWidgets = new Dictionary<string, BuildConfigCategory>();
+        private Dictionary<string, BuildConfigCategory> CategoryWidgets_PersonalConfigs = new Dictionary<string, BuildConfigCategory>();
         private BitmapImage? ImageCheckMark = null;
         private BitmapImage? ImageWarning = null;
+
+        private LauncherTab CurrentTab = LauncherTab.PersonalConfig;
 
         public MainWindow()
         {
@@ -48,15 +56,26 @@ namespace UnrealBuildLauncher
             ImageWarning = new BitmapImage(uriSourceWarning);
         }
 
-        public void RefreshWindow()
+        public void RefreshWindow(bool bLoadConfigsFromFile = true)
         {
+            // Fetch build configs
+            List<BuildConfigData> BuildConfigs = new List<BuildConfigData>();
+            if (bLoadConfigsFromFile)
+            {
+                BuildConfigs = LoadBuildConfigs();
+            }
+            else
+            {
+                foreach (var CategoryWidget in CategoryWidgets_PersonalConfigs)
+                {
+                    BuildConfigs.AddRange(CategoryWidget.Value.GetEntriesData());
+                }
+            }
+
             // Reset Window
             ClearErrorText();
             ClearConfigWidgets();
             UpdateWindowTitle();
-
-            // Fetch build configs
-            List<BuildConfigData> BuildConfigs = LoadBuildConfigs();
 
             // Populate Categories
             foreach (var BuildConfig in BuildConfigs)
@@ -64,12 +83,12 @@ namespace UnrealBuildLauncher
                 if (string.IsNullOrEmpty(BuildConfig.BuildCategory))
                     continue;
 
-                if (CategoryWidgets.ContainsKey(BuildConfig.BuildCategory))
+                if (CategoryWidgets_PersonalConfigs.ContainsKey(BuildConfig.BuildCategory))
                     continue;
 
-                CategoryWidgets[BuildConfig.BuildCategory] = new BuildConfigCategory();
-                CategoryWidgets[BuildConfig.BuildCategory].SetCategory(BuildConfig.BuildCategory);
-                CategoriesStackPanel.Children.Add(CategoryWidgets[BuildConfig.BuildCategory]);
+                CategoryWidgets_PersonalConfigs[BuildConfig.BuildCategory] = new BuildConfigCategory();
+                CategoryWidgets_PersonalConfigs[BuildConfig.BuildCategory].SetCategory(BuildConfig.BuildCategory);
+                StackPanel_PersonalConfigs.Children.Add(CategoryWidgets_PersonalConfigs[BuildConfig.BuildCategory]);
             }
 
             // Populate Entries
@@ -78,10 +97,11 @@ namespace UnrealBuildLauncher
                 if (string.IsNullOrEmpty(BuildConfig.BuildCategory))
                     continue;
 
-                if (!CategoryWidgets.ContainsKey(BuildConfig.BuildCategory))
+                if (!CategoryWidgets_PersonalConfigs.ContainsKey(BuildConfig.BuildCategory))
                     continue;
 
-                CategoryWidgets[BuildConfig.BuildCategory].AddEntryWidget(BuildConfig);
+                var EntryWidget = CategoryWidgets_PersonalConfigs[BuildConfig.BuildCategory].AddEntryWidget(BuildConfig);
+                EntryWidget.onBuildConfigEntryModified += ScheduleRefresh;
             }
         }
 
@@ -186,12 +206,12 @@ namespace UnrealBuildLauncher
 
         public void ClearConfigWidgets()
         {
-            foreach (var CategoryWidget in CategoryWidgets.Values)
+            foreach (var CategoryWidget in CategoryWidgets_PersonalConfigs.Values)
             {
                 CategoryWidget.ClearConfigWidgets();
             }
-            CategoriesStackPanel.Children.Clear();
-            CategoryWidgets.Clear();
+            StackPanel_PersonalConfigs.Children.Clear();
+            CategoryWidgets_PersonalConfigs.Clear();
         }
 
         public void OnClick_NewFile(object sender, RoutedEventArgs e)
@@ -252,7 +272,7 @@ namespace UnrealBuildLauncher
 
             // Prepare Template Data
             var ConfigFileTemplate = new BuildConfigsFile();
-            foreach (var CategoryWidget in CategoryWidgets)
+            foreach (var CategoryWidget in CategoryWidgets_PersonalConfigs)
             {
                 ConfigFileTemplate.BuildConfigs.AddRange(CategoryWidget.Value.GetEntriesData());
             }
@@ -280,7 +300,7 @@ namespace UnrealBuildLauncher
                 {
                     // Create Template Data
                     var ConfigFileTemplate = new BuildConfigsFile();
-                    foreach (var CategoryWidget in CategoryWidgets)
+                    foreach (var CategoryWidget in CategoryWidgets_PersonalConfigs)
                     {
                         ConfigFileTemplate.BuildConfigs.AddRange(CategoryWidget.Value.GetEntriesData());
                     }
@@ -319,6 +339,11 @@ namespace UnrealBuildLauncher
             // Open explorer window
             string argument = "/select, \"" + configFilePath + "\"";
             Process.Start("explorer.exe", argument);
+        }
+
+        private void ScheduleRefresh()
+        {
+            RefreshWindow(false);
         }
     }
 }

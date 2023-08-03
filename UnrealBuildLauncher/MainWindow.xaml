@@ -37,12 +37,22 @@
                 <TextBlock x:Name="TextErrorPrompt" Text="" VerticalAlignment="Center"/>
             </StatusBar>
 
-            <ScrollViewer VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True" >
-                <StackPanel x:Name="CategoriesStackPanel" Margin="20">
-                    <local:BuildConfigCategory/>
-                    <local:BuildConfigCategory/>
-                </StackPanel>
-            </ScrollViewer>
+            <TabControl Margin="0,12,0,0">
+                <TabItem Header="Personal Configs">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True" >
+                        <StackPanel x:Name="StackPanel_PersonalConfigs" Margin="20">
+                            <local:BuildConfigCategory/>
+                            <local:BuildConfigCategory/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Shared Configs" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True" >
+                        <StackPanel x:Name="StackPanel_SharedConfigs" Margin="20">
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
         </DockPanel>
     </Grid>
 </Window>
