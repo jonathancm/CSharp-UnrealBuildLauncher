@@ -6,7 +6,7 @@ namespace UnrealBuildLauncher
 {
     public class BuildConfigsFile
     {
-        public string Version { get; set; } = "0.3";
+        public string Version { get; set; } = "0.4";
         public List<BuildConfigData> BuildConfigs { get; set; } = new List<BuildConfigData>();
 
         public void InitTemplate()
